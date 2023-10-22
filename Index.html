@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetris JS</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+</head>
+<body>
+    <script src="Tablero.js"></script>
+    <script src="Tetrimino.js"></script>
+    <script>
+        const MARGEN_TABLERO = 10
+        let regulador_velocidad = 0 //regula la velocidad de la tecla
+        /*
+            funcion nativa de P5.js
+            sirve para ajustar las propiedades
+            iniciales de los objetos y variables
+         */
+        function setup(){
+            createCanvas(900,600)
+            mapeoBaseTetriminos()
+            tablero = new Tablero()
+            tetrimino = new Tetrimino()
+            resizeCanvas(
+                tablero.ancho+2*MARGEN_TABLERO, 
+                tablero.alto+2*MARGEN_TABLERO
+            )
+        }
+         /*
+            funcion nativa de P5.js
+            sirve para dar instrucciones 
+            precisas de dibujo sobre el canvas
+         */
+        function draw(){
+            background("gray")
+            tablero.dibujar()
+            tetrimino.dibujar()
+            keyEventsTetris()
+        }
+
+        function mapeoBaseTetriminos(){
+            tetriminosBase = {
+                "Z": {
+                    color: "red",
+                    mapa: [
+                        createVector()
+                    ]
+                }
+            }
+        }
+
+
+
+        function keyEventsTetris(){
+            if(keyIsDown(DOWN_ARROW)){
+                tetrimino.moverAbajo()
+            }
+
+            if(millis() - regulador_velocidad < 50 ) {
+                return
+            }
+            regulador_velocidad = millis()
+
+            if(keyIsDown(RIGHT_ARROW)){
+                tetrimino.moverDerecha()
+            }
+            if(keyIsDown(LEFT_ARROW)){
+                tetrimino.moverIzquierda()
+            }
+        }
+        
+    </script>
+</body>
+</html>
